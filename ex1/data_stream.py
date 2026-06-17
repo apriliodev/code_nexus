@@ -191,5 +191,6 @@ def data_stream():
     print("== DataStream statistics ==")
     stream.print_processors_stats()
 
+
 if __name__ == "__main__":
     data_stream()
