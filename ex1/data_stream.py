@@ -1,13 +1,11 @@
-import abc
 from abc import ABC, abstractmethod
-import typing
 from typing import Any
 
 
 class DataProcessor(ABC):
     def __init__(self) -> None:
         super().__init__()
-        self.liste = []
+        self.liste: list = []
         self.rank = 0
         self.total = 0
 
@@ -91,7 +89,8 @@ class LogProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
         if isinstance(data, dict):
             for key, value in data.items():
-                if not isinstance(key, str) or not isinstance(value, str):
+                if (not isinstance(key, str)
+                        or not isinstance(value, str)):
                     return False
             return True
 
@@ -101,7 +100,8 @@ class LogProcessor(DataProcessor):
                     return False
                 if isinstance(donnee, dict):
                     for key, value in donnee.items():
-                        if not isinstance(key, str) or not isinstance(value, str):
+                        if (not isinstance(key, str)
+                                or not isinstance(value, str)):
                             return False
             return True
         return False
@@ -122,23 +122,24 @@ class LogProcessor(DataProcessor):
 
 class DataStream():
     def __init__(self) -> None:
-        self.liste = []
+        self.liste: list = []
         pass
 
     def register_processor(self, proc: DataProcessor) -> None:
         self.liste.append(proc)
 
     def process_stream(self, data: list):
-        for donnee in data:
+        for d in data:
             found = False
             for liste in self.liste:
-                if liste.validate(donnee):
-                    liste.ingest(donnee)
+                if liste.validate(d):
+                    liste.ingest(d)
                     found = True
                     break
             if not found:
                 print(
-                    f"DataStream error - Can't process element in stream: {donnee}")
+                    f"DataStream error - Can't process element in stream: {d}"
+                )
 
     def print_processors_stats(self):
         if not self.liste:
@@ -159,7 +160,8 @@ def data_stream():
         'Hello world',
         [3.14, -1, 2.71],
         [
-            {'log_level': 'WARNING', 'log_message': 'Telnet access! Use ssh instead'},
+            {'log_level': 'WARNING', 'log_message':
+             'Telnet access! Use ssh instead'},
             {'log_level': 'INFO', 'log_message': 'User wil is connected'}
         ],
         42,

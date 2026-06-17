@@ -1,13 +1,11 @@
-import abc
 from abc import ABC, abstractmethod
-import typing
 from typing import Any
 
 
 class DataProcessor(ABC):
     def __init__(self) -> None:
         super().__init__()
-        self.liste = []
+        self.liste: list = []
         self.rank = 0
 
     @abstractmethod
@@ -84,7 +82,8 @@ class LogProcessor(DataProcessor):
                     return False
                 if isinstance(donnee, dict):
                     for key, value in donnee.items():
-                        if not isinstance(key, str) or not isinstance(value, str):
+                        if (not isinstance(key, str)
+                                or not isinstance(value, str)):
                             return False
             return True
         return False
@@ -139,7 +138,8 @@ def data_processor() -> None:
     print("Processing data: [{’log_level’: ’NOTICE’, ’log_message’: ’")
     print("Connection to server’}, {’log_level’: ’ERROR’, ’log_message’: ’")
     print("Unauthorized access!!’}]")
-    log.ingest([{'log_level': 'NOTICE', 'log_message': 'Connection to server'}, {
+    log.ingest([{'log_level': 'NOTICE', 'log_message':
+                 'Connection to server'}, {
                'log_level': 'ERROR', 'log_message': 'Unauthorized access!!'}])
     print("Extracting 2 values...")
     for i in range(2):
